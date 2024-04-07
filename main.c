@@ -1,9 +1,14 @@
+#include <stdbool.h>
+#include <stdio.h>
+
 int main() {
+    InputBuffer* input_buffer = new_input_buffer();
+
     // print prompt
     print_prompt();
 
     // get input
-    
+
 
     // read commands
         // check if command is valid or not
@@ -26,6 +31,8 @@ InputBuffer* new_input_buffer() {
   return input_buffer;
 }
 
-void print_prompt() { 
-    printf("db > "); 
+void print_prompt() {
+    printf("db > ");
 }
+
+ssize_t getline(char **lineptr, size_t *n, FILE *stream);
