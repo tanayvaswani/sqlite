@@ -1,20 +1,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-int main() {
-    InputBuffer* input_buffer = new_input_buffer();
-
-    // print prompt
-    print_prompt();
-
-    // get input
-    read_input(input_buffer);
-
-    // read commands
-        // check if command is valid or not
-        // check if command is exit or not
-}
+#include <string.h>
 
 // custom datatype to store & validate inputs
 typedef struct {
@@ -49,4 +36,30 @@ void read_input(InputBuffer* input_buffer) {
   // Ignore trailing newline
   input_buffer->input_length = bytes_read - 1;
   input_buffer->buffer[bytes_read - 1] = 0;
+}
+
+void close_input_buffer(InputBuffer* input_buffer) {
+    free(input_buffer->buffer);
+    free(input_buffer);
+}
+
+int main() {
+    InputBuffer* input_buffer = new_input_buffer();
+
+    while (true) {
+        // print prompt
+        print_prompt();
+
+        // read commands
+        // check if command is valid or not
+        read_input(input_buffer);
+
+        // check if command is """exit""" or not
+        if (strcmp(input_buffer->buffer, ".exit") == 0) {
+            close_input_buffer(input_buffer);
+            exit(EXIT_SUCCESS);
+        } else {
+            printf("Unrecognized command '%s'.\n", input_buffer->buffer);
+        }
+    }
 }
